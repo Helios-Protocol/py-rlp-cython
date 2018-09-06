@@ -15,9 +15,10 @@ from rlp.sedes import big_endian_int, binary, boolean, text
 from rlp.sedes.lists import List, is_sedes, is_sequence
 from rlp.sedes.serializable import Serializable
 from rlp.utils import ALL_BYTES
+from msgpack import packb, unpackb
 
 
-def encode(obj, sedes=None, infer_serializer=True, cache=True):
+def encode(obj, sedes=None, infer_serializer=False, cache=True):
     """Encode a Python object in RLP format.
 
     By default, the object is serialized in a suitable way first (using
@@ -45,28 +46,29 @@ def encode(obj, sedes=None, infer_serializer=True, cache=True):
              encode (will not happen)
     :raises: :exc:`rlp.SerializationError` if the serialization fails
     """
-    if isinstance(obj, Serializable):
-        cached_rlp = obj._cached_rlp
-        if sedes is None and cached_rlp:
-            return cached_rlp
-        else:
-            really_cache = (
-                cache and
-                sedes is None
-            )
-    else:
-        really_cache = False
+    # if isinstance(obj, Serializable):
+    #     cached_rlp = obj._cached_rlp
+    #     if sedes is None and cached_rlp:
+    #         return cached_rlp
+    #     else:
+    #         really_cache = (
+    #             cache and
+    #             sedes is None
+    #         )
+    # else:
+    #     really_cache = False
 
     if sedes:
         item = sedes.serialize(obj)
-    elif infer_serializer:
-        item = infer_sedes(obj).serialize(obj)
+    # elif infer_serializer:
+    #     item = infer_sedes(obj).serialize(obj)
     else:
         item = obj
 
-    result = encode_raw(item)
-    if really_cache:
-        obj._cached_rlp = result
+    #result = encode_raw(item)
+    result = packb(item)
+    # if really_cache:
+    #     obj._cached_rlp = result
     return result
 
 
@@ -222,19 +224,21 @@ def decode(rlp, sedes=None, strict=True, recursive_cache=False, **kwargs):
              `strict` is true
     :raises: :exc:`rlp.DeserializationError` if the deserialization fails
     """
-    if not is_bytes(rlp):
-        raise DecodingError('Can only decode RLP bytes, got type %s' % type(rlp).__name__, rlp)
-    try:
-        item, per_item_rlp, end = consume_item(rlp, 0)
-    except IndexError:
-        raise DecodingError('RLP string too short', rlp)
-    if end != len(rlp) and strict:
-        msg = 'RLP string ends with {} superfluous bytes'.format(len(rlp) - end)
-        raise DecodingError(msg, rlp)
+    item = unpackb(rlp)
+    # if not is_bytes(rlp):
+    #     raise DecodingError('Can only decode RLP bytes, got type %s' % type(rlp).__name__, rlp)
+    # try:
+    #    item, per_item_rlp, end = consume_item(rlp, 0)
+    # except IndexError:
+    #     raise DecodingError('RLP string too short', rlp)
+    #this is checked withing msgpack
+    # if end != len(rlp) and strict:
+    #     msg = 'RLP string ends with {} superfluous bytes'.format(len(rlp) - end)
+    #     raise DecodingError(msg, rlp)
     if sedes:
         obj = sedes.deserialize(item, **kwargs)
-        if is_sequence(obj) or hasattr(obj, '_cached_rlp'):
-            _apply_rlp_cache(obj, per_item_rlp, recursive_cache)
+        # if is_sequence(obj) or hasattr(obj, '_cached_rlp'):
+        #     _apply_rlp_cache(obj, per_item_rlp, recursive_cache)
         return obj
     else:
         return item

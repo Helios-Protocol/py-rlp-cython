@@ -63,3 +63,10 @@ target/
 
 # Editors
 *.swp
+*.idea
+
+*.pyx
+*.so
+*.o
+*.cpp
+*.c

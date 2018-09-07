@@ -65,7 +65,7 @@ static inline int sede_pack_write(sede_packer* pk, const char *data, size_t l)
 //
 // overwrites some bytes at a given position
 //
-static inline int msgpack_pack_insert_at_position(sede_packer* pk, const char *data, size_t l, size_t position)
+static inline int sede_pack_insert_at_position(sede_packer* pk, const char *data, size_t l, size_t position)
 {
     char* buf = pk->buf;
     size_t bs = pk->buf_size;
@@ -96,12 +96,12 @@ static inline int msgpack_pack_insert_at_position(sede_packer* pk, const char *d
 }
 
 #define sede_pack_append_buffer(user, buf, len) \
-        return msgpack_pack_write(user, (const char*)buf, len)
+        return sede_pack_write(user, (const char*)buf, len)
 
 #define sede_pack_insert_buffer(user, buf, len, position) \
-        return msgpack_pack_insert_at_position(user, (const char*)buf, len, position)
+        return sede_pack_insert_at_position(user, (const char*)buf, len, position)
 
-//#include "sede_templates.h"
+#include "sede_templates.h"
 
 #ifdef __cplusplus
 }

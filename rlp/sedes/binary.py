@@ -11,13 +11,14 @@ class Binary(object):
                         a minimum length is required otherwise
     """
 
-    def __init__(self, min_length=None, max_length=None, allow_empty=False):
+    def __init__(self, min_length=None, max_length=None, allow_empty=False, validate = True):
         self.min_length = min_length or 0
         if max_length is None:
             self.max_length = float('inf')
         else:
             self.max_length = max_length
         self.allow_empty = allow_empty
+        self.validate = validate
 
     @classmethod
     def fixed_length(cls, l, allow_empty=False):
@@ -33,20 +34,20 @@ class Binary(object):
                     self.allow_empty and l == 0))
 
     def serialize(self, obj):
-        if not Binary.is_valid_type(obj):
+        if self.validate and not Binary.is_valid_type(obj):
             raise SerializationError('Object is not a serializable ({})'.format(type(obj)), obj)
 
-        if not self.is_valid_length(len(obj)):
+        if self.validate and not self.is_valid_length(len(obj)):
             raise SerializationError('Object has invalid length', obj)
 
         return obj
 
     def deserialize(self, serial):
-        if not isinstance(serial, Atomic):
+        if self.validate and not isinstance(serial, Atomic):
             m = 'Objects of type {} cannot be deserialized'
             raise DeserializationError(m.format(type(serial).__name__), serial)
 
-        if self.is_valid_length(len(serial)):
+        if not self.validate or self.is_valid_length(len(serial)):
             return serial
         else:
             raise DeserializationError('{} has invalid length'.format(type(serial)), serial)

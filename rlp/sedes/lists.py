@@ -45,9 +45,10 @@ class List(list):
                    lists runs out of elements.
     """
 
-    def __init__(self, elements=None, strict=True):
+    def __init__(self, elements=None, strict=True, validate = True):
         super(List, self).__init__()
         self.strict = strict
+        self.validate = validate
 
         if elements:
             for e in elements:
@@ -63,7 +64,7 @@ class List(list):
 
     @to_list
     def serialize(self, obj):
-        if not is_sequence(obj):
+        if self.validate and not is_sequence(obj):
             raise ListSerializationError('Can only serialize sequences', obj)
         if self.strict:
             if len(self) != len(obj) or len(self) < len(obj):
@@ -77,7 +78,7 @@ class List(list):
 
     @to_tuple
     def deserialize(self, serial):
-        if not is_sequence(serial):
+        if self.validate and not is_sequence(serial):
             raise ListDeserializationError('Can only deserialize sequences', serial)
 
         if self.strict and len(serial) != len(self):
@@ -99,13 +100,14 @@ class CountableList(object):
     :param max_length: maximum number of allowed elements, or `None` for no limit
     """
 
-    def __init__(self, element_sedes, max_length=None):
+    def __init__(self, element_sedes, max_length=None, validate = True):
         self.element_sedes = element_sedes
         self.max_length = max_length
+        self.validate = validate
 
     @to_list
     def serialize(self, obj):
-        if not is_sequence(obj):
+        if self.validate and not is_sequence(obj):
             raise ListSerializationError('Can only serialize sequences', obj)
 
         if self.max_length is not None and len(obj) > self.max_length:
@@ -125,7 +127,7 @@ class CountableList(object):
 
     @to_tuple
     def deserialize(self, serial):
-        if not is_sequence(serial):
+        if self.validate and not is_sequence(serial):
             raise ListDeserializationError('Can only deserialize sequences', serial=serial)
         for index, element in enumerate(serial):
             if self.max_length is not None and index >= self.max_length:

@@ -245,6 +245,10 @@ class BaseSerializable(collections.Sequence):
         return self._hash_cache
 
     @classmethod
+    def get_sede_identifier(cls):
+        return cls._meta.sedes.get_sede_identifier()
+
+    @classmethod
     def serialize(cls, obj):
         try:
             return cls._meta.sedes.serialize(obj)

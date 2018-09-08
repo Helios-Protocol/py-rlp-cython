@@ -60,6 +60,7 @@ def encode(obj, sedes=None, infer_serializer=False, cache=True):
 
     if sedes:
         item = sedes.serialize(obj)
+
     # elif infer_serializer:
     #     item = infer_sedes(obj).serialize(obj)
     else:
@@ -224,7 +225,10 @@ def decode(rlp, sedes=None, strict=True, recursive_cache=False, **kwargs):
              `strict` is true
     :raises: :exc:`rlp.DeserializationError` if the deserialization fails
     """
-    item = unpackb(rlp)
+    if sedes:
+        fast_sedes = sedes.get_sede_identifier()
+
+    item = unpackb(rlp, sedes=fast_sedes)
     # if not is_bytes(rlp):
     #     raise DecodingError('Can only decode RLP bytes, got type %s' % type(rlp).__name__, rlp)
     # try:

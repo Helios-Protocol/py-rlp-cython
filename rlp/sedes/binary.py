@@ -33,24 +33,35 @@ class Binary(object):
         return any((self.min_length <= l <= self.max_length,
                     self.allow_empty and l == 0))
 
+    def get_sede_identifier(self):
+        return 0
+
+    # def serialize(self, obj):
+    #     if self.validate and not Binary.is_valid_type(obj):
+    #         raise SerializationError('Object is not a serializable ({})'.format(type(obj)), obj)
+    #
+    #     if self.validate and not self.is_valid_length(len(obj)):
+    #         raise SerializationError('Object has invalid length', obj)
+    #
+    #     return obj
+    #
+    # def deserialize(self, serial):
+    #     if self.validate and not isinstance(serial, Atomic):
+    #         m = 'Objects of type {} cannot be deserialized'
+    #         raise DeserializationError(m.format(type(serial).__name__), serial)
+    #
+    #     if not self.validate or self.is_valid_length(len(serial)):
+    #         return serial
+    #     else:
+    #         raise DeserializationError('{} has invalid length'.format(type(serial)), serial)
+
+
     def serialize(self, obj):
-        if self.validate and not Binary.is_valid_type(obj):
-            raise SerializationError('Object is not a serializable ({})'.format(type(obj)), obj)
-
-        if self.validate and not self.is_valid_length(len(obj)):
-            raise SerializationError('Object has invalid length', obj)
-
+        #Removed fixed length for now
         return obj
 
     def deserialize(self, serial):
-        if self.validate and not isinstance(serial, Atomic):
-            m = 'Objects of type {} cannot be deserialized'
-            raise DeserializationError(m.format(type(serial).__name__), serial)
-
-        if not self.validate or self.is_valid_length(len(serial)):
-            return serial
-        else:
-            raise DeserializationError('{} has invalid length'.format(type(serial)), serial)
+        return serial
 
 
 binary = Binary()

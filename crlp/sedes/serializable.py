@@ -246,7 +246,10 @@ class BaseSerializable(collections.Sequence):
 
     @classmethod
     def get_sede_identifier(cls):
-        return cls._meta.sedes.get_sede_identifier()
+        try:
+            return cls._meta.sedes.get_sede_identifier()
+        except AttributeError:
+            return 0
 
     @classmethod
     def serialize(cls, obj):

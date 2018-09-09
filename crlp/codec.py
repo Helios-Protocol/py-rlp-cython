@@ -18,7 +18,7 @@ from rlp.utils import ALL_BYTES
 from msgpack import packb, unpackb
 
 
-def encode(obj, sedes=None, infer_serializer=False, cache=True):
+def encode(obj, sedes=None, infer_serializer=True, cache=True):
     """Encode a Python object in RLP format.
 
     By default, the object is serialized in a suitable way first (using
@@ -60,13 +60,15 @@ def encode(obj, sedes=None, infer_serializer=False, cache=True):
 
     if sedes:
         item = sedes.serialize(obj)
-
-    # elif infer_serializer:
-    #     item = infer_sedes(obj).serialize(obj)
+    elif infer_serializer:
+        item = infer_sedes(obj).serialize(obj)
     else:
         item = obj
 
     #result = encode_raw(item)
+    # print(item)
+    # print('test')
+    # exit()
     result = packb(item)
     # if really_cache:
     #     obj._cached_rlp = result
@@ -207,7 +209,7 @@ def consume_item(rlp, start):
     return consume_payload(rlp, p, s, t, l)
 
 
-def decode(rlp, sedes=None, strict=True, recursive_cache=False, **kwargs):
+def decode(rlp, sedes=None, strict=True, recursive_cache=False, use_list = False, **kwargs):
     """Decode an RLP encoded object.
 
     If the deserialized result `obj` has an attribute :attr:`_cached_rlp` (e.g. if `sedes` is a
@@ -227,8 +229,9 @@ def decode(rlp, sedes=None, strict=True, recursive_cache=False, **kwargs):
     """
     if sedes:
         fast_sedes = sedes.get_sede_identifier()
-
-    item = unpackb(rlp, sedes=fast_sedes)
+        item = unpackb(rlp, sedes=fast_sedes, use_list = use_list)
+    else:
+        item = unpackb(rlp, use_list = use_list)
     # if not is_bytes(rlp):
     #     raise DecodingError('Can only decode RLP bytes, got type %s' % type(rlp).__name__, rlp)
     # try:
@@ -282,9 +285,6 @@ def infer_sedes(obj):
         return binary
     elif not isinstance(obj, str) and isinstance(obj, collections.Sequence):
         return List(map(infer_sedes, obj))
-    elif isinstance(obj, bool):
-        return boolean
-    elif isinstance(obj, str):
-        return text
+
     msg = 'Did not find sedes handling type {}'.format(type(obj).__name__)
     raise TypeError(msg)

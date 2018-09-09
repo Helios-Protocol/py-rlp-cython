@@ -29,5 +29,7 @@ class Boolean:
                 serial
             )
 
+    def get_sede_identifier(self):
+        return 0
 
 boolean = Boolean()

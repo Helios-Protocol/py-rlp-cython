@@ -54,8 +54,8 @@ class List(list):
         self.strict = strict
         self.has_serializable_children = has_serializable_children
 
-        if len(elements) < 2:
-            raise RLPException("List needs at least 2 elements")
+        # if len(elements) < 2:
+        #     raise RLPException("List needs at least 2 elements")
 
         if elements:
             for e in elements:
@@ -72,7 +72,11 @@ class List(list):
     def get_sede_identifier(self):
         inner_list = []
         for sede in self:
-            inner_list.append(sede.get_sede_identifier())
+            try:
+                inner_list.append(sede.get_sede_identifier())
+            except AttributeError:
+                inner_list.append(0)
+
         return inner_list
 
 
@@ -150,17 +154,13 @@ class CountableList(object):
         self.has_serializable_children = has_serializable_children
 
     def get_sede_identifier(self):
-        return [self.element_sedes.get_sede_identifier()]
-        # if(!isinstance(self.element_sedes), list)
-        # if len(self.element_sedes) == 0:
-        #     return [];
-        # elif len(self.element_sedes) == 1:
-        #     return [self[0].get_sede_identifier()]
-        # else:
-        #     inner_list = []
-        #     for sede in self.element_sedes:
-        #         inner_list.append(sede.get_sede_identifier())
-        #     return [inner_list]
+        try:
+            return [self.element_sedes.get_sede_identifier()]
+        except AttributeError:
+            return [0]
+
+
+
 
     # @to_list
     # def serialize(self, obj):

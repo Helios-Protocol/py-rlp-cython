@@ -37,9 +37,8 @@ extras_require['dev'] = (
     extras_require['doc']
 )
 
-
 setup(
-    name='rlp',
+    name='crlp',
     # *IMPORTANT*: Don't manually change the version here. See README for more.
     version='1.0.2',
     description="A package for Recursive Length Prefix encoding and decoding",

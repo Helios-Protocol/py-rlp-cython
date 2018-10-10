@@ -38,7 +38,7 @@ class BigEndianInt(object):
     def get_sede_identifier(self):
         return 0
 
-    def deserialize(self, serial):
+    def deserialize(self, serial, to_list = False):
         if self.l is not None and len(serial) != self.l:
             raise DeserializationError('Invalid serialization (wrong size)',
                                        serial)
@@ -70,7 +70,7 @@ class FBigEndianInt(object):
         return obj
 
 
-    def deserialize(self, serial):
+    def deserialize(self, serial, to_list = False):
         #doing int deserialization in msgpack
         return serial
 

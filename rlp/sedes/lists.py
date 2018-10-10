@@ -130,11 +130,24 @@ class List(list):
             except DeserializationError as e:
                 raise ListDeserializationError(serial=serial, element_exception=e, index=idx)
 
-    def deserialize(self, serial):
+    @to_list
+    def deserialize_to_list(self, serial):
+        for idx, (sedes, element) in enumerate(zip(self, serial)):
+            try:
+                yield sedes.deserialize(element, to_list = True)
+            except DeserializationError as e:
+                raise ListDeserializationError(serial=serial, element_exception=e, index=idx)
+
+    def deserialize(self, serial, to_list = False):
         if self.has_serializable_children:
-            return self.deserialize_to_tuple(serial)
+            if to_list:
+                return self.deserialize_to_list(serial)
+            else:
+                return self.deserialize_to_tuple(serial)
         else:
             return serial
+
+
 
 def FList(elements):
     return List(elements, has_serializable_children = False)
@@ -214,15 +227,27 @@ class CountableList(object):
             except DeserializationError as e:
                 raise ListDeserializationError(serial=serial, element_exception=e, index=index)
 
+    @to_list
+    def deserialize_to_list(self, serial):
+        for index, element in enumerate(serial):
+            try:
+                yield self.element_sedes.deserialize(element, to_list = True)
+            except DeserializationError as e:
+                raise ListDeserializationError(serial=serial, element_exception=e, index=index)
+
+
     def serialize(self, obj):
         if self.has_serializable_children:
             return self.serialize_to_list(obj)
         else:
             return obj
 
-    def deserialize(self, serial):
+    def deserialize(self, serial, to_list = False):
         if self.has_serializable_children:
-            return self.deserialize_to_tuple(serial)
+            if to_list:
+                return self.deserialize_to_list(serial)
+            else:
+                return self.deserialize_to_tuple(serial)
         else:
             return serial
 

@@ -18,7 +18,7 @@ class Boolean:
         else:
             raise Exception("Invariant: no other options for boolean values")
 
-    def deserialize(self, serial):
+    def deserialize(self, serial, to_list = False):
         if serial == b'':
             return False
         elif serial == b'\x01':

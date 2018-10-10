@@ -44,7 +44,7 @@ class Text:
 
         return obj.encode(self.encoding)
 
-    def deserialize(self, serial):
+    def deserialize(self, serial, to_list = False):
         if not isinstance(serial, Atomic):
             m = 'Objects of type {} cannot be deserialized'
             raise DeserializationError(m.format(type(serial).__name__), serial)

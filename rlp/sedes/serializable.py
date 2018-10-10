@@ -259,9 +259,10 @@ class BaseSerializable(collections.Sequence):
             raise ObjectSerializationError(obj=obj, sedes=cls, list_exception=e)
 
     @classmethod
-    def deserialize(cls, serial, **extra_kwargs):
+    def deserialize(cls, serial, to_list = False, **extra_kwargs):
+
         try:
-            values = cls._meta.sedes.deserialize(serial)
+            values = cls._meta.sedes.deserialize(serial, to_list = to_list)
         except ListDeserializationError as e:
             raise ObjectDeserializationError(serial=serial, sedes=cls, list_exception=e)
 

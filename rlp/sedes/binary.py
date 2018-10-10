@@ -60,7 +60,7 @@ class Binary(object):
         #Removed fixed length for now
         return obj
 
-    def deserialize(self, serial):
+    def deserialize(self, serial, to_list = False):
         return serial
 
 

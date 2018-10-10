@@ -74,27 +74,29 @@ def encode(obj, sedes=None, infer_serializer=True, cache=True):
     #     obj._cached_rlp = result
     return result
 
-
 def encode_raw(item):
-    """RLP encode (a nested sequence of) :class:`Atomic`s."""
-    if isinstance(item, Atomic):
-        if len(item) == 1 and item[0] < 128:
-            return item
-        payload = item
-        prefix_offset = 128  # string
-    elif not isinstance(item, str) and isinstance(item, collections.Sequence):
-        payload = b''.join(encode_raw(x) for x in item)
-        prefix_offset = 192  # list
-    else:
-        msg = 'Cannot encode object of type {0}'.format(type(item).__name__)
-        raise EncodingError(msg, item)
+    return packb(item)
 
-    try:
-        prefix = length_prefix(len(payload), prefix_offset)
-    except ValueError:
-        raise EncodingError('Item too big to encode', item)
-
-    return prefix + payload
+# def encode_raw(item):
+#     """RLP encode (a nested sequence of) :class:`Atomic`s."""
+#     if isinstance(item, Atomic):
+#         if len(item) == 1 and item[0] < 128:
+#             return item
+#         payload = item
+#         prefix_offset = 128  # string
+#     elif not isinstance(item, str) and isinstance(item, collections.Sequence):
+#         payload = b''.join(encode_raw(x) for x in item)
+#         prefix_offset = 192  # list
+#     else:
+#         msg = 'Cannot encode object of type {0}'.format(type(item).__name__)
+#         raise EncodingError(msg, item)
+#
+#     try:
+#         prefix = length_prefix(len(payload), prefix_offset)
+#     except ValueError:
+#         raise EncodingError('Item too big to encode', item)
+#
+#     return prefix + payload
 
 
 LONG_LENGTH = 256**8
@@ -243,7 +245,7 @@ def decode(rlp, sedes=None, strict=True, recursive_cache=False, use_list = False
     #     msg = 'RLP string ends with {} superfluous bytes'.format(len(rlp) - end)
     #     raise DecodingError(msg, rlp)
     if sedes:
-        obj = sedes.deserialize(item, **kwargs)
+        obj = sedes.deserialize(item, to_list = use_list, **kwargs)
         # if is_sequence(obj) or hasattr(obj, '_cached_rlp'):
         #     _apply_rlp_cache(obj, per_item_rlp, recursive_cache)
         return obj

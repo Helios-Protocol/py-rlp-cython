@@ -230,7 +230,11 @@ def decode(rlp, sedes=None, strict=True, recursive_cache=False, use_list = False
     :raises: :exc:`rlp.DeserializationError` if the deserialization fails
     """
     if sedes:
-        fast_sedes = sedes.get_sede_identifier()
+        try:
+            fast_sedes = sedes.get_sede_identifier()
+        except AttributeError:
+            # Default an identifier of 0, which is binary. This can be used in the case where the python sede converts to binary.
+            fast_sedes = 0
         item = unpackb(rlp, sedes=fast_sedes, use_list = use_list)
     else:
         item = unpackb(rlp, use_list = use_list)

@@ -148,7 +148,7 @@ class List(list):
             return serial
 
 
-
+#use this when all of the children serialization and deserialzation is handled with the cython back end
 def FList(elements):
     return List(elements, has_serializable_children = False)
 
@@ -251,5 +251,6 @@ class CountableList(object):
         else:
             return serial
 
+#use this when all of the children serialization and deserialzation is handled with the cython back end
 def FCountableList(elements):
     return CountableList(elements, has_serializable_children = False)

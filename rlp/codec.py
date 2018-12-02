@@ -237,7 +237,7 @@ def decode(rlp, sedes=None, strict=True, recursive_cache=False, use_list = False
             fast_sedes = 0
         item = unpackb(rlp, sedes=fast_sedes, use_list = use_list)
     else:
-        item = unpackb(rlp, use_list = use_list)
+        item = unpackb(rlp, use_list = True) #For some fucking reason, if there are no sedes we the specifications say to return a list
     # if not is_bytes(rlp):
     #     raise DecodingError('Can only decode RLP bytes, got type %s' % type(rlp).__name__, rlp)
     # try:

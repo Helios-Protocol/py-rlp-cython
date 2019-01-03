@@ -1,10 +1,7 @@
-# pyrlp
+# rlp-cython
 
-[![Build Status](https://travis-ci.org/ethereum/pyrlp.svg?branch=develop)](https://travis-ci.org/ethereum/pyrlp)
-[![Coverage Status](https://coveralls.io/repos/ethereum/pyrlp/badge.svg)](https://coveralls.io/r/ethereum/pyrlp)
-[![PyPI version](https://badge.fury.io/py/rlp.svg)](http://badge.fury.io/py/rlp)
-
-A Python implementation of Recursive Length Prefix encoding (RLP). You can find
+A Python implementation of Recursive Length Prefix encoding (RLP) with a very fast
+cython back-end. You can find the original python based RLP [here](https://github.com/ethereum/pyrlp),
 the specification of the standard in the
 [Ethereum wiki](https://github.com/ethereum/wiki/wiki/RLP) and the
 documentation of this package on

@@ -15,7 +15,7 @@ from rlp.sedes import big_endian_int, binary, boolean, text
 from rlp.sedes.lists import List, is_sedes, is_sequence
 from rlp.sedes.serializable import Serializable
 from rlp.utils import ALL_BYTES
-from msgpack import packb, unpackb
+from msgpack_rlp import packb, unpackb
 
 
 def encode(obj, sedes=None, infer_serializer=True, cache=True):

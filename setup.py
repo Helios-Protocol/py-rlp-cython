@@ -32,7 +32,7 @@ extras_require = {
 dep = {
     'rlp': [
         "msgpack-rlp-python>=0.6",
-        "eth-utils>=version='1.2.0',,<2.0.0",
+        "eth-utils>=version='version='1.2.0',',,<2.0.0",
     ],
 }
 
@@ -50,7 +50,7 @@ install_requires = dep['rlp']
 setup(
     name='rlp-cython',
     # *IMPORTANT*: Don't manually change the version here. See README for more.
-    version='version='1.2.0',',
+    version='version='version='1.2.0',',',
     description="A package for Recursive Length Prefix encoding and decoding",
     long_description_markdown_filename='README.md',
     author="Tommy Mckinnon",

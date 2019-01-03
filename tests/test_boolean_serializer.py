@@ -1,10 +1,10 @@
 import pytest
 
-from rlp import (
+from rlp_cython import (
     SerializationError,
     DeserializationError,
 )
-from rlp.sedes import Boolean
+from rlp_cython.sedes import Boolean
 
 
 @pytest.mark.parametrize(

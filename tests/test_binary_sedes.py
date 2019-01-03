@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 import pytest
-from rlp import SerializationError
-from rlp.sedes import Binary
+from rlp_cython import SerializationError
+from rlp_cython.sedes import Binary
 
 
 @pytest.mark.parametrize(

@@ -2,10 +2,10 @@ import re
 
 import pytest
 
-from rlp import SerializationError
-from rlp import infer_sedes, encode, decode
-from rlp.sedes import big_endian_int, binary, List
-from rlp.sedes.serializable import Serializable
+from rlp_cython import SerializationError
+from rlp_cython import infer_sedes, encode, decode
+from rlp_cython.sedes import big_endian_int, binary, List
+from rlp_cython.sedes.serializable import Serializable
 
 
 class RLPType1(Serializable):

@@ -1,9 +1,9 @@
 from __future__ import unicode_literals
 
 import pytest
-from rlp import SerializationError, DeserializationError
-from rlp import infer_sedes
-from rlp.sedes import (
+from rlp_cython import SerializationError, DeserializationError
+from rlp_cython import infer_sedes
+from rlp_cython.sedes import (
     big_endian_int,
     binary,
     boolean,

@@ -2,9 +2,9 @@
 util to benchmark known usecase
 """
 import random
-import rlp
-from rlp.sedes import big_endian_int, BigEndianInt, Binary, binary, CountableList
-from rlp.sedes.serializable import Serializable
+import rlp_cython as rlp
+from rlp_cython.sedes import big_endian_int, BigEndianInt, Binary, binary, CountableList
+from rlp_cython.sedes.serializable import Serializable
 import time
 
 address = Binary.fixed_length(20, allow_empty=True)

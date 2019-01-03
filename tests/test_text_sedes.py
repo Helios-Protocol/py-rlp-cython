@@ -1,12 +1,12 @@
 # -*- coding: UTF-8 -*-
 import pytest
-from rlp import (
+from rlp_cython import (
     SerializationError,
     DeserializationError,
     encode,
     decode,
 )
-from rlp.sedes import Text
+from rlp_cython.sedes import Text
 
 from hypothesis import (
     given,

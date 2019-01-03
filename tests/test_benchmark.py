@@ -1,9 +1,9 @@
 from itertools import repeat, chain
 import sys
 import pytest
-import rlp
-from rlp.sedes import binary, CountableList
-from rlp.exceptions import DecodingError, DeserializationError
+import rlp_cython as rlp_cython
+from rlp_cython.sedes import binary, CountableList
+from rlp_cython.exceptions import DecodingError, DeserializationError
 
 
 try:

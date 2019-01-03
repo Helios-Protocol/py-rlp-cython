@@ -1,5 +1,5 @@
 # -*- coding: utf8 -*-
-from rlp import (
+from rlp_cython import (
     encode,
     decode,
     decode_lazy,

@@ -3,7 +3,7 @@ from eth_utils import (
     big_endian_to_int,
 )
 
-from rlp.exceptions import DeserializationError, SerializationError
+from rlp_cython.exceptions import DeserializationError, SerializationError
 
 
 class BigEndianInt(object):

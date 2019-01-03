@@ -13,7 +13,7 @@ In this package, byte strings are represented either as Python strings or as
 ``bytearrays``. Lists can be any sequence, e.g. ``lists`` or ``tuples``. To
 encode these kinds of objects, use :func:`rlp.encode`::
 
-    >>> from rlp import encode
+    >>> from rlp_cython import encode
     >>> encode('ethereum')
     b'\x88ethereum'
     >>> encode('')
@@ -28,7 +28,7 @@ encode these kinds of objects, use :func:`rlp.encode`::
 
 Decoding is just as simple::
 
-    >>> from rlp import decode
+    >>> from rlp_cython import decode
     >>> decode(b'\x88ethereum')
     b'ethereum'
     >>> decode(b'\x80')
@@ -65,7 +65,7 @@ Serialization and its couterpart, deserialization, is done by, what we call,
 :mod:`rlp.sedes.big_endian_int` is in charge. To decode our integer, we can
 pass this sedes to :func:`rlp.decode`::
 
-    >>> from rlp.sedes import big_endian_int
+    >>> from rlp_cython.sedes import big_endian_int
     >>> decode(b'\x82\x05\xdf', big_endian_int)
     1503
 
@@ -73,7 +73,7 @@ pass this sedes to :func:`rlp.decode`::
 For unicode strings, there's the sedes :mod:`rlp.sedes.binary`, which uses UTF-8
 to convert to and from byte strings::
 
-    >>> from rlp.sedes import binary
+    >>> from rlp_cython.sedes import binary
     >>> encode(u'Ðapp')
     b'\x85\xc3\x90app'
     >>> decode(b'\x85\xc3\x90app', binary)
@@ -87,7 +87,7 @@ combinations of types. Therefore, we need to create a sedes object specific for
 each list type. As base class for this we can use
 :class:`rlp.sedes.List`::
 
-    >>> from rlp.sedes import List
+    >>> from rlp_cython.sedes import List
     >>> encode([5, 'fdsa', 0])
     b'\xc7\x05\x84fdsa\x80'
     >>> sedes = List([big_endian_int, binary, big_endian_int])

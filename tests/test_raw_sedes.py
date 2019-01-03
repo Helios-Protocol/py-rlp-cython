@@ -1,6 +1,6 @@
 import pytest
-from rlp import encode, decode, SerializationError, DecodingError
-from rlp.sedes import raw
+from rlp_cython import encode, decode, SerializationError, DecodingError
+from rlp_cython.sedes import raw
 
 
 serializable = (

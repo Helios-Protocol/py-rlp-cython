@@ -1,8 +1,8 @@
 import pytest
-import rlp
-from rlp.sedes import big_endian_int
-from rlp.sedes.lists import CountableList
-from rlp import SerializationError, DeserializationError
+import rlp_cython as rlp
+from rlp_cython.sedes import big_endian_int
+from rlp_cython.sedes.lists import CountableList
+from rlp_cython import SerializationError, DeserializationError
 
 
 def test_countable_list():

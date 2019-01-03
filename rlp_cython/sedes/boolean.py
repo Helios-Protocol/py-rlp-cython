@@ -1,4 +1,4 @@
-from rlp.exceptions import (
+from rlp_cython.exceptions import (
     DeserializationError,
     SerializationError,
 )

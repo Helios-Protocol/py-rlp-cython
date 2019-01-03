@@ -1,5 +1,5 @@
-from rlp.exceptions import SerializationError, DeserializationError
-from rlp.atomic import Atomic
+from rlp_cython.exceptions import SerializationError, DeserializationError
+from rlp_cython.atomic import Atomic
 
 
 class Binary(object):

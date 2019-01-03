@@ -2,9 +2,9 @@ from collections import Sequence
 
 import pytest
 
-import rlp
-from rlp import DeserializationError
-from rlp.sedes import big_endian_int, CountableList
+import rlp_cython as rlp
+from rlp_cython import DeserializationError
+from rlp_cython.sedes import big_endian_int, CountableList
 
 
 def evaluate(lazy_list):

@@ -6,15 +6,15 @@ from eth_utils import (
     is_bytes,
 )
 
-from rlp.atomic import (
+from rlp_cython.atomic import (
     Atomic,
 )
-from rlp.exceptions import EncodingError, DecodingError
-from rlp.sedes.binary import Binary as BinaryClass
-from rlp.sedes import big_endian_int, binary, boolean, text
-from rlp.sedes.lists import List, is_sedes, is_sequence
-from rlp.sedes.serializable import Serializable
-from rlp.utils import ALL_BYTES
+from rlp_cython.exceptions import EncodingError, DecodingError
+from rlp_cython.sedes.binary import Binary as BinaryClass
+from rlp_cython.sedes import big_endian_int, binary, boolean, text
+from rlp_cython.sedes.lists import List, is_sedes, is_sequence
+from rlp_cython.sedes.serializable import Serializable
+from rlp_cython.utils import ALL_BYTES
 from msgpack_rlp import packb, unpackb
 
 

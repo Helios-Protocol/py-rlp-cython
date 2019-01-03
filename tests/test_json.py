@@ -8,8 +8,8 @@ from eth_utils import (
     add_0x_prefix,
 )
 
-import rlp
-from rlp import encode, decode, decode_lazy, infer_sedes, DecodingError
+import rlp_cython as rlp
+from rlp_cython import encode, decode, decode_lazy, infer_sedes, DecodingError
 
 
 def evaluate(ll):

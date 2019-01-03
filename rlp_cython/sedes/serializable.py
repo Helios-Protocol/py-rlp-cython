@@ -10,7 +10,7 @@ from eth_utils import (
     to_tuple,
 )
 
-from rlp.exceptions import (
+from rlp_cython.exceptions import (
     ListSerializationError,
     ObjectSerializationError,
     ListDeserializationError,

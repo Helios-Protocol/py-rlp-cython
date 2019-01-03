@@ -4,9 +4,9 @@ from eth_utils import (
     decode_hex,
 )
 
-from rlp.exceptions import DecodingError
-from rlp.codec import consume_length_prefix, consume_item
-from rlp import (
+from rlp_cython.exceptions import DecodingError
+from rlp_cython.codec import consume_length_prefix, consume_item
+from rlp_cython import (
     decode,
     encode,
 )

@@ -4,9 +4,9 @@ import pytest
 
 from eth_utils import int_to_big_endian
 
-from rlp import SerializationError
-from rlp.sedes import big_endian_int, BigEndianInt
-from rlp.utils import ALL_BYTES
+from rlp_cython import SerializationError
+from rlp_cython.sedes import big_endian_int, BigEndianInt
+from rlp_cython.utils import ALL_BYTES
 
 
 valid_data = (

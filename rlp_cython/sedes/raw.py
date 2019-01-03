@@ -5,8 +5,8 @@ larger structures.
 """
 from collections import Sequence
 
-from rlp.exceptions import SerializationError
-from rlp.atomic import Atomic
+from rlp_cython.exceptions import SerializationError
+from rlp_cython.atomic import Atomic
 
 
 def serializable(obj):

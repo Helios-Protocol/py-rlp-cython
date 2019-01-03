@@ -1,5 +1,5 @@
 import pytest
-from rlp import decode, DecodingError
+from rlp_cython import decode, DecodingError
 
 
 invalid_rlp = (

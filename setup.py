@@ -32,7 +32,7 @@ extras_require = {
 dep = {
     'rlp': [
         "msgpack-rlp-python>=0.6",
-        "eth-utils>=version='version='2.1.0',',,<2.0.0",
+        "eth-utils>=1.0.2,<2",
     ],
 }
 

@@ -58,9 +58,8 @@ class FBigEndianInt(object):
               use the shortest possible one
     """
 
-    def __init__(self, l=None):
-        self.l = l
-
+    def __init__(self):
+        pass
 
     def get_sede_identifier(self):
         return 1

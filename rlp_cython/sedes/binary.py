@@ -57,11 +57,15 @@ class Binary(object):
 
 
     def serialize(self, obj):
-        #Removed fixed length for now
+        if self.validate and not self.is_valid_length(len(obj)):
+            raise SerializationError('Object has invalid length', obj)
         return obj
 
     def deserialize(self, serial, to_list = False):
-        return serial
+        if not self.validate or self.is_valid_length(len(serial)):
+            return serial
+        else:
+            raise DeserializationError('{} has invalid length'.format(type(serial)), serial)
 
 
 binary = Binary()

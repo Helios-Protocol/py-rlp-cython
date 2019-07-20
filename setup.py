@@ -50,7 +50,7 @@ install_requires = dep['rlp']
 setup(
     name='rlp-cython',
     # *IMPORTANT*: Don't manually change the version here. See README for more.
-    version='2.1.5',
+    version='2.1.6',
     description="A package for Recursive Length Prefix encoding and decoding",
     long_description_markdown_filename='README.md',
     author="Tommy Mckinnon",

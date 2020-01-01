@@ -1,7 +1,7 @@
 from itertools import repeat, chain
 import sys
 import pytest
-import rlp_cython as rlp_cython
+import rlp_cython as rlp
 from rlp_cython.sedes import binary, CountableList
 from rlp_cython.exceptions import DecodingError, DeserializationError
 
@@ -26,7 +26,7 @@ class Message(rlp.Serializable):
     fields = [
         ('field1', binary),
         ('field2', binary),
-        ('field3', CountableList(binary, max_length=100))
+        ('field3', CountableList(binary))
     ]
 
 

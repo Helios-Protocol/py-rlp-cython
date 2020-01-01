@@ -65,13 +65,11 @@ def encode(obj, sedes=None, infer_serializer=True, cache=True):
     else:
         item = obj
 
-    #result = encode_raw(item)
-    # print(item)
-    # print('test')
-    # exit()
-    result = packb(item)
-    # if really_cache:
-    #     obj._cached_rlp = result
+    try:
+        result = packb(item)
+    except Exception as e:
+        raise EncodingError(e, item)
+
     return result
 
 def encode_raw(item):
@@ -229,15 +227,19 @@ def decode(rlp, sedes=None, strict=True, recursive_cache=False, use_list = False
              `strict` is true
     :raises: :exc:`rlp.DeserializationError` if the deserialization fails
     """
-    if sedes:
-        try:
-            fast_sedes = sedes.get_sede_identifier()
-        except AttributeError:
-            # Default an identifier of 0, which is binary. This can be used in the case where the python sede converts to binary.
-            fast_sedes = 0
-        item = unpackb(rlp, sedes=fast_sedes, use_list = use_list)
-    else:
-        item = unpackb(rlp, use_list = True) #For some fucking reason, if there are no sedes we the specifications say to return a list
+    try:
+        if sedes:
+            try:
+                fast_sedes = sedes.get_sede_identifier()
+            except AttributeError:
+                # Default an identifier of 0, which is binary. This can be used in the case where the python sede converts to binary.
+                fast_sedes = 0
+            item = unpackb(rlp, sedes=fast_sedes, use_list = use_list)
+        else:
+            item = unpackb(rlp, use_list = True) #For some fucking reason, if there are no sedes we the specifications say to return a list
+    except Exception as e:
+        raise DecodingError(e, rlp)
+
     # if not is_bytes(rlp):
     #     raise DecodingError('Can only decode RLP bytes, got type %s' % type(rlp).__name__, rlp)
     # try:

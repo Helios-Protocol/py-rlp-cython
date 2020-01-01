@@ -232,36 +232,6 @@ def test_serializable_field_immutability(type_1_a, type_1_b, type_2):
     assert type_2.field2_2[1] == type_1_b
 
 
-def test_serializable_encoding_rlp_caching(rlp_obj):
-    assert rlp_obj._cached_rlp is None
-
-    # obj should start out without a cache
-    rlp_code = encode(rlp_obj, cache=False)
-    assert rlp_obj._cached_rlp is None
-
-    # cache should be populated now.
-    assert encode(rlp_obj, cache=True) == rlp_code
-    assert rlp_obj._cached_rlp == rlp_code
-
-    # cache should still be populated and encoding should used cached_rlp value
-    rlp_obj._cached_rlp = b'test-uses-cache'
-    assert encode(rlp_obj, cache=True) == b'test-uses-cache'
-
-    obj_decoded = decode(rlp_code, sedes=rlp_obj.__class__)
-    assert obj_decoded == rlp_obj
-    assert obj_decoded._cached_rlp == rlp_code
-
-
-def test_list_of_serializable_decoding_rlp_caching(rlp_obj):
-    rlp_obj_code = encode(rlp_obj, cache=False)
-    L = [rlp_obj, rlp_obj]
-    list_code = encode(L, cache=False)
-
-    L2 = decode(list_code, sedes=List((type(rlp_obj), type(rlp_obj))), recursive_cache=True)
-    assert L2[0]._cached_rlp == rlp_obj_code
-    assert L2[1]._cached_rlp == rlp_obj_code
-
-
 def test_serializable_basic_copy(type_1_a):
     n_type_1_a = type_1_a.copy()
     assert n_type_1_a == type_1_a
